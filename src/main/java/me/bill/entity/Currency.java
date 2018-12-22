@@ -20,5 +20,11 @@ public class Currency {
     private UUID id;
     @Column(nullable = false)
     private String code;
+    @Column(nullable = false)
+    private Integer num;
+    @Column(nullable = false)
+    private String e;
+    @Column(nullable = false)
+    private String currency;
 
 }
