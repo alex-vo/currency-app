@@ -18,7 +18,7 @@ public class Currency {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     @Column
     private UUID id;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 3)
     private String code;
     @Column(nullable = false)
     private Integer num;

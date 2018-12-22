@@ -33,8 +33,10 @@ public class WikipediaCurrencyCrawler implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         try {
+            log.info("Started getting currency data from Wikipedia");
             List<Currency> currencies = getCurrenciesFromWikipedia();
             currencyRepository.saveAll(currencies);
+            log.info("Successfully finished getting currency data from Wikipedia");
         } catch (Exception e) {
             log.error("Failed to read currency data from Wikipedia", e);
         }
