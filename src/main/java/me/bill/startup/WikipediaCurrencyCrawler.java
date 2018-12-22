@@ -35,7 +35,7 @@ public class WikipediaCurrencyCrawler implements ApplicationRunner {
         try {
             List<Currency> currencies = getCurrenciesFromWikipedia();
             currencyRepository.saveAll(currencies);
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("Failed to read currency data from Wikipedia", e);
         }
     }
