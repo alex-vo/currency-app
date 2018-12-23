@@ -7,7 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @Data
@@ -22,7 +22,7 @@ public class Request {
     @Column(nullable = false)
     private String ip;
     @Column(nullable = false)
-    private Date date;
+    private ZonedDateTime dateTime;
     @Column(nullable = false)
     private String url;
 
