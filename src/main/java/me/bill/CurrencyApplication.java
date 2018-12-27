@@ -7,10 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class CurrencyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(
-                CurrencyApplication.class,
-                "--server.port=8889"
-        );
+        SpringApplication.run(CurrencyApplication.class);
     }
 
 }
