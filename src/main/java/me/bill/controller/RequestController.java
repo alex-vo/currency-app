@@ -13,9 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.lang.reflect.Type;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Controller
@@ -30,8 +32,13 @@ public class RequestController {
 
     @GetMapping(value = "requests/{page}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public List<RequestDTO> getRequests(@PathVariable("page") Integer page) {
-        Page<Request> requests = requestRepository.findAll(PageRequest.of(page, PAGE_SIZE, Sort.Direction.DESC, "dateTime"));
+    public List<RequestDTO> getRequests(@PathVariable("page") Integer page,
+                                        @RequestParam("dateTime") String dateTime) {
+        ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTime);
+        Page<Request> requests = requestRepository.findByDateTimeLessThan(
+                zonedDateTime,
+                PageRequest.of(page, PAGE_SIZE, Sort.Direction.DESC, "dateTime")
+        );
         Type targetType = new TypeToken<List<RequestDTO>>() {}.getType();
         return modelMapper.map(requests.getContent(), targetType);
     }
