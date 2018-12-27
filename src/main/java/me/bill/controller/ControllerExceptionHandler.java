@@ -15,6 +15,9 @@ public class ControllerExceptionHandler {
     @ResponseBody
     public ResponseEntity<ErrorResponseDTO> handle(ResponseStatusException e) {
         log.error("Failed to process request", e);
-        return new ResponseEntity<>(new ErrorResponseDTO(e.getStatus().value(), e.getReason()), e.getStatus());
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO();
+        errorResponseDTO.setCode(e.getStatus().value());
+        errorResponseDTO.setMessage(e.getReason());
+        return new ResponseEntity<>(errorResponseDTO, e.getStatus());
     }
 }

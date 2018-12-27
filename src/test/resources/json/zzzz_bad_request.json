@@ -1,0 +1,4 @@
+{
+  "code": 400,
+  "message": "Currency length must be equal to 3"
+}
