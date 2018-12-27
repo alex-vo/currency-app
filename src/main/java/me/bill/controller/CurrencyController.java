@@ -1,5 +1,6 @@
 package me.bill.controller;
 
+import me.bill.constant.CurrencyAppConstants;
 import me.bill.dto.CurrencyDTO;
 import me.bill.entity.Currency;
 import me.bill.repository.CurrencyRepository;
@@ -22,7 +23,7 @@ public class CurrencyController {
     @Autowired
     private CurrencyRepository currencyRepository;
 
-    @GetMapping(value = "currency/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = CurrencyAppConstants.CURRENCY_ENDPOINT + "/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public CurrencyDTO getCurrencyByCode(@PathVariable("code") String code) {
         CurrencyCodeValidator.validate(code);

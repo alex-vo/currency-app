@@ -1,29 +1,26 @@
-package me.bill.filter;
+package me.bill.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
 import me.bill.entity.Request;
 import me.bill.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Component
 @Slf4j
-public class RequestLoggingFilter extends OncePerRequestFilter {
+public class RequestInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
     private RequestRepository requestRepository;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse resp, FilterChain filterChain) throws IOException, ServletException {
+    public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object object) {
         try {
             ZonedDateTime now = ZonedDateTime.now();
             log.info("Request received from {} to {} at {}", req.getRemoteAddr(), req.getRequestURI(), now.format(DateTimeFormatter.ISO_DATE_TIME));
@@ -32,8 +29,10 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
             request.setDateTime(now);
             request.setUrl(req.getRequestURI());
             requestRepository.save(request);
-        } finally {
-            filterChain.doFilter(req, resp);
+        } catch (Exception e) {
+            log.error("Failed to persist request", e);
         }
+
+        return true;
     }
 }
