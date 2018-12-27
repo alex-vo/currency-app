@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-  var currentPage = 1;
+  var currentPage = 0;
   var requestNumber = 1;
   var requestTable = $("#request-table");
   var dateTime = new Date().toISOString();
@@ -13,7 +13,11 @@ $(document).ready(function(){
           + request.dateTime + "</td><td>" + request.url + "</td></tr>");
       });
 
-      currentPage++;
+      if(data.length == 10){
+        currentPage++;
+      }else{
+        $("#load-more").off('click');
+      }
     }).fail(function() {
       console.log("Failed to get data from server");
     });
