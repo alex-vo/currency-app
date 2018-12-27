@@ -10,7 +10,7 @@ $(document).ready(function(){
 
       $.each(data, function(key, request){
         requestTable.append("<tr><td>" + requestNumber++ + "</td><td>" + request.ip + "</td><td>"
-          + request.dateTime + "</td><td>" + request.url + "</td></tr>");
+          + request.currencyCode + "</td><td>" + request.dateTime + "</td><td>" + request.url + "</td></tr>");
       });
 
       if(data.length == 10){

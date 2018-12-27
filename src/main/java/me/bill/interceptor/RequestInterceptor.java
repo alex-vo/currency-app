@@ -1,6 +1,7 @@
 package me.bill.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
+import me.bill.constant.CurrencyAppConstants;
 import me.bill.entity.Request;
 import me.bill.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,13 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object object) {
         try {
             ZonedDateTime now = ZonedDateTime.now();
-            log.info("Request received from {} to {} at {}", req.getRemoteAddr(), req.getRequestURI(), now.format(DateTimeFormatter.ISO_DATE_TIME));
+            String requestURI = req.getRequestURI();
+            log.info("Request received from {} to {} at {}", req.getRemoteAddr(), requestURI, now.format(DateTimeFormatter.ISO_DATE_TIME));
             Request request = new Request();
             request.setIp(req.getRemoteAddr());
             request.setDateTime(now);
-            request.setUrl(req.getRequestURI());
+            request.setUrl(requestURI);
+            request.setCurrencyCode(requestURI.replaceAll("^/" + CurrencyAppConstants.CURRENCY_ENDPOINT + "/+", ""));
             requestRepository.save(request);
         } catch (Exception e) {
             log.error("Failed to persist request", e);

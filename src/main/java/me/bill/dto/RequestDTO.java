@@ -9,4 +9,5 @@ public class RequestDTO {
     private String ip;
     private ZonedDateTime dateTime;
     private String url;
+    private String currencyCode;
 }

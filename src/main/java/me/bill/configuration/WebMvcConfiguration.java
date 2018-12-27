@@ -23,6 +23,6 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(requestInterceptor)
-                .addPathPatterns("/" + CurrencyAppConstants.CURRENCY_ENDPOINT + "/*");
+                .addPathPatterns("/" + CurrencyAppConstants.CURRENCY_ENDPOINT + "/?*");
     }
 }

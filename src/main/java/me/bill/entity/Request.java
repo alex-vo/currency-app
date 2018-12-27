@@ -25,5 +25,7 @@ public class Request {
     private ZonedDateTime dateTime;
     @Column(nullable = false)
     private String url;
+    @Column
+    private String currencyCode;
 
 }
