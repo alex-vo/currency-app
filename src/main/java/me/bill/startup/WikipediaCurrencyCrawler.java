@@ -4,11 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import me.bill.entity.Currency;
 import me.bill.repository.CurrencyRepository;
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
+import org.jsoup.Connection;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -24,8 +23,8 @@ public class WikipediaCurrencyCrawler implements ApplicationRunner {
     public static final String ACTIVE_CODES_ELEMENT_ID = "Active_codes";
     public static final String CURRENCY_TABLE_SELECTOR = ".wikitable.sortable";
 
-    @Value("${wikipedia.article.url}")
-    private String wikipediaArticleUrl;
+    @Autowired
+    private Connection wikipediaConnection;
 
     @Autowired
     private CurrencyRepository currencyRepository;
@@ -43,7 +42,7 @@ public class WikipediaCurrencyCrawler implements ApplicationRunner {
     }
 
     private List<Currency> getCurrenciesFromWikipedia() throws IOException {
-        Document doc = Jsoup.connect(wikipediaArticleUrl).get();
+        Document doc = wikipediaConnection.get();
         Element currencyTable = doc.getElementById(ACTIVE_CODES_ELEMENT_ID)
                 .parent()
                 .siblingElements()
