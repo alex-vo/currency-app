@@ -29,6 +29,9 @@ public class WikipediaCurrencyCrawler implements ApplicationRunner {
     @Autowired
     private CurrencyRepository currencyRepository;
 
+    /**
+     * Retrieves data from Wikipedia and saves to {@link Currency} entity.
+     */
     @Override
     public void run(ApplicationArguments args) {
         try {

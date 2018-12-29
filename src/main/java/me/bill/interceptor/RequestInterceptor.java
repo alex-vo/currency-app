@@ -20,6 +20,9 @@ public class RequestInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private RequestRepository requestRepository;
 
+    /**
+     * Intercepts requests coming to /currency/{code} and saves its data to {@link Request} entity.
+     */
     @Override
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object object) {
         try {

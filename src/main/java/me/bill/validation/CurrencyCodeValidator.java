@@ -12,6 +12,12 @@ public class CurrencyCodeValidator {
 
     public static final Integer EXPECTED_CURRENCY_CODE_LENGTH = 3;
 
+    /**
+     * Validates currency code length, which must be equal to 3.
+     *
+     * @param currencyCode Currency code originating from consumer input
+     * @throws ResponseStatusException in case validation failed
+     */
     public static void validate(String currencyCode) {
         List<String> errors = new ArrayList<>();
         if (StringUtils.length(currencyCode) != EXPECTED_CURRENCY_CODE_LENGTH) {
