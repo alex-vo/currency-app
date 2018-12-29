@@ -10,6 +10,10 @@ import java.util.List;
 
 public class CurrencyCodeValidator {
 
+    private CurrencyCodeValidator() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static final Integer EXPECTED_CURRENCY_CODE_LENGTH = 3;
 
     /**
