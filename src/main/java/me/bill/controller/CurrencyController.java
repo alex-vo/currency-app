@@ -1,5 +1,6 @@
 package me.bill.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import me.bill.constant.CurrencyAppConstants;
 import me.bill.dto.CurrencyDTO;
 import me.bill.entity.Currency;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.server.ResponseStatusException;
 
 @Controller
+@Slf4j
 public class CurrencyController {
 
     @Autowired
@@ -26,6 +28,7 @@ public class CurrencyController {
     @GetMapping(value = CurrencyAppConstants.CURRENCY_ENDPOINT + "/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public CurrencyDTO getCurrencyByCode(@PathVariable("code") String code) {
+        log.info("Getting currency information for code {}", code);
         CurrencyCodeValidator.validate(code);
         Currency currency = currencyRepository.getByCodeIgnoreCase(code);
         if (currency == null) {

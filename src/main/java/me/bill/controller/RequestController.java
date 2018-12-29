@@ -1,5 +1,6 @@
 package me.bill.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import me.bill.dto.RequestDTO;
 import me.bill.entity.Request;
 import me.bill.repository.RequestRepository;
@@ -21,6 +22,7 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 @Controller
+@Slf4j
 public class RequestController {
 
     public static final Integer PAGE_SIZE = 10;
@@ -34,6 +36,7 @@ public class RequestController {
     @ResponseBody
     public List<RequestDTO> getRequests(@PathVariable("page") Integer page,
                                         @RequestParam("dateTime") String dateTime) {
+        log.info("Getting requests at page {} with date greater than {}", page, dateTime);
         ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTime);
         Page<Request> requests = requestRepository.findByDateTimeLessThan(
                 zonedDateTime,
