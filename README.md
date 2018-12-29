@@ -1,8 +1,8 @@
 To run application:
 ```
-	./gradlew clean bootRun
+./gradlew clean bootRun
 ```
 To run tests:
 ```
-	./gradlew clean test
+./gradlew clean test
 ```
