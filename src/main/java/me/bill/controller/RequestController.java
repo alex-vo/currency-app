@@ -7,6 +7,7 @@ import me.bill.repository.RequestRepository;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -25,7 +26,8 @@ import java.util.List;
 @Slf4j
 public class RequestController {
 
-    public static final Integer PAGE_SIZE = 10;
+    @Value("${request.log.page.size:10}")
+    private Integer pageSize;
 
     @Autowired
     private RequestRepository requestRepository;
@@ -40,7 +42,7 @@ public class RequestController {
         ZonedDateTime zonedDateTime = ZonedDateTime.parse(dateTime);
         Page<Request> requests = requestRepository.findByDateTimeLessThan(
                 zonedDateTime,
-                PageRequest.of(page, PAGE_SIZE, Sort.Direction.DESC, "dateTime")
+                PageRequest.of(page, pageSize, Sort.Direction.DESC, "dateTime")
         );
         Type targetType = new TypeToken<List<RequestDTO>>() {}.getType();
         return modelMapper.map(requests.getContent(), targetType);
